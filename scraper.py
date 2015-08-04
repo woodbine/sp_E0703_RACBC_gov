@@ -75,7 +75,7 @@ for link in links:
     url_csvs = block_scv.find_all('a','set1')
     for url_csv in url_csvs:
         if '$FILE' in url_csv['href']:
-            if 'Spend' or 'Invoices' in  url_csv.text:
+            if not 'Credit' in  url_csv.text:
                 url = 'http://www.redcar-cleveland.gov.uk'+url_csv['href']
                 csvfile = url_csv.text.strip()
                 csvfiles = csvfile.replace('10Invoices over 500 pounds -', ' ').replace('11Invoices over £ 500 -', ' ').replace('12Invoices over£500-', ' ').replace('12Invoices over £500', ' ').replace('02Invoices over 500', ' ').replace('03Invoices over 500', ' ').replace('04Invoices over 500', ' ').replace('05Invoices over 500', ' ').replace('06Invoices over 500', ' ').replace('07Invoices over 500', ' ').replace('08Invoices over 500', ' ').replace('09Invoices over 500', ' ').replace('01Invoices Over £500 ', ' ').replace('02Invoices Over £500 ', ' ').replace('03Invoices Over £500 ', ' ').replace('04Invoices Over £500 ', ' ').replace('05Invoices Over £500 ', ' ').replace('06Invoices Over £500 ', ' ').replace('07Invoices Over £500 ', ' ').replace('08Invoices Over £500 ', ' ').replace('09Invoices Over £500 ', ' ').replace('10Invoices Over £500 ', ' ').replace('11Invoices Over £500 ', ' ').replace('12Invoices Over £500 ', ' ').replace('Invoices Over £500 ', ' ').replace('Over £500 Invoices', ' ').replace('Credit Notes', ' ').replace('Invoices over£500-', ' ').replace('Invoices over 500 ', ' ').replace('Invoices over 500 pounds', ' ').replace('Over 500 Credit', ' ').replace('Over 500 Spend ', ' ').replace('£500 spend ', ' ').replace('Over 500 Credit Notes ', ' ').replace('Over 500 Spend -', ' ').replace('Over 500 Credits - ', ' ').replace('Invoices over £500 ', ' ').replace('Invoices over £ 500 - ', ' ').replace('Invoices over £500 - ', ' ').replace('pounds - ', ' ').replace('-', ' ').replace('Invoices over £500 ', ' ').replace('£500 Credit Notes ', ' ').replace('Credit',' ').replace('.csv', ' ').replace('csv', ' ').replace('Over', ' ').replace(u'\xa3500', ' ').replace('500', ' ').replace(' ', '').split(' ')[0].split('(')[0]
@@ -84,6 +84,8 @@ for link in links:
                     csvMth = 'Apr'
                 if 'Not' in csvMth:
                     csvMth = 'Mar'
+                if 'sJu' in csvMth:
+                    csvMth = 'Jun'
                 csvYr = csvfiles[-2:]
                 if 'il' in csvYr:
                     csvYr = '15'
