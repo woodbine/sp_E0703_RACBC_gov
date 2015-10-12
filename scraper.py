@@ -1,10 +1,7 @@
  #-*- coding: utf-8 -*-
 
 #### IMPORTS 1.0
-# -*- coding: utf-8 -*-
-import sys
-reload(sys)
-sys.setdefaultencoding('utf-8')
+
 import os
 import re
 import scraperwiki
@@ -101,6 +98,9 @@ soup = BeautifulSoup(html, "lxml")
 
 
 #### SCRAPE DATA
+import sys
+reload(sys)
+sys.setdefaultencoding('utf-8')
 
 block = soup.find( text = re.compile('Documents available to download on this page are: ')).find_next('ul').find_next('ul')
 links = block.find_all('a')
