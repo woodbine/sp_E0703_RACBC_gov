@@ -1,4 +1,4 @@
- #-*- coding: utf-8 -*-
+#-*- coding: utf-8 -*-
 
 #### IMPORTS 1.0
 
@@ -114,8 +114,59 @@ for link in links:
     t = block_scv.find('span', 'the council-st').text.strip()
     for url_csv in url_csvs:
         if '$FILE' in url_csv['href']:
-            if 'Financial Year 2015-16' in t:
+            if 'Financial Year 2016-17' in t:
                         url = 'http://www.redcar-cleveland.gov.uk'+url_csv['href']
+                        if 'pend' in url:
+                            csvfile = url_csv.text.strip()
+                            csvfiles = csvfile.replace('10Invoices over 500 pounds -', ' ').replace('11Invoices over £ 500 -', ' ').replace('12Invoices over£500-', ' ').replace('12Invoices over £500', ' ').replace('02Invoices over 500', ' ').replace('03Invoices over 500', ' ').replace('04Invoices over 500', ' ').replace('05Invoices over 500', ' ').replace('06Invoices over 500', ' ').replace('07Invoices over 500', ' ').replace('08Invoices over 500', ' ').replace('09Invoices over 500', ' ').replace('01Invoices Over £500 ', ' ').replace('02Invoices Over £500 ', ' ').replace('03Invoices Over £500 ', ' ').replace('04Invoices Over £500 ', ' ').replace('05Invoices Over £500 ', ' ').replace('06Invoices Over £500 ', ' ').replace('07Invoices Over £500 ', ' ').replace('08Invoices Over £500 ', ' ').replace('09Invoices Over £500 ', ' ').replace('10Invoices Over £500 ', ' ').replace('11Invoices Over £500 ', ' ').replace('12Invoices Over £500 ', ' ').replace('Invoices Over £500 ', ' ').replace('Over £500 Invoices', ' ').replace('Credit Notes', ' ').replace('Invoices over£500-', ' ').replace('Invoices over 500 ', ' ').replace('Invoices over 500 pounds', ' ').replace('Over 500 Credit', ' ').replace('Over 500 Spend ', ' ').replace('£500 spend ', ' ').replace('Over 500 Credit Notes ', ' ').replace('Over 500 Spend -', ' ').replace('Over 500 Credits - ', ' ').replace('Invoices over £500 ', ' ').replace('Invoices over £ 500 - ', ' ').replace('Invoices over £500 - ', ' ').replace('pounds - ', ' ').replace('-', ' ').replace('Invoices over £500 ', ' ').replace('£500 Credit Notes ', ' ').replace('Credit',' ').replace('.csv', ' ').replace('csv', ' ').replace('Over', ' ').replace(u'\xa3500', ' ').replace('500', ' ').replace(' ', '').split(' ')[0].split('(')[0]
+                            if csvfiles.startswith('spend'):
+                                csvfiles = csvfiles.replace('spend', '')
+                            csvfiles = csvfiles.split('.')[0]
+                            csvMth = csvfiles[:3]
+                            if 'sAp' in csvMth:
+                                csvMth = 'Apr'
+                            if 'Not' in csvMth:
+                                csvMth = 'Mar'
+                            if 'sJu' in csvMth:
+                                csvMth = 'Jun'
+                            csvYr = csvfiles[-2:]
+                            if 'il' in csvYr:
+                                csvYr = '15'
+                            if 'ly' in csvYr:
+                                csvYr = '14'
+                            if 'ch' in csvYr:
+                                csvYr = '15'
+                            csvYr = '20' + csvYr
+                            csvMth = convert_mth_strings(csvMth.upper())
+                            data.append([csvYr, csvMth, url])
+
+
+            elif 'Financial Year 2015-16' in t:
+                        url = 'http://www.redcar-cleveland.gov.uk'+url_csv['href']
+                        if 'pend' in url:
+                            csvfile = url_csv.text.strip()
+                            csvfiles = csvfile.replace('10Invoices over 500 pounds -', ' ').replace('11Invoices over £ 500 -', ' ').replace('12Invoices over£500-', ' ').replace('12Invoices over £500', ' ').replace('02Invoices over 500', ' ').replace('03Invoices over 500', ' ').replace('04Invoices over 500', ' ').replace('05Invoices over 500', ' ').replace('06Invoices over 500', ' ').replace('07Invoices over 500', ' ').replace('08Invoices over 500', ' ').replace('09Invoices over 500', ' ').replace('01Invoices Over £500 ', ' ').replace('02Invoices Over £500 ', ' ').replace('03Invoices Over £500 ', ' ').replace('04Invoices Over £500 ', ' ').replace('05Invoices Over £500 ', ' ').replace('06Invoices Over £500 ', ' ').replace('07Invoices Over £500 ', ' ').replace('08Invoices Over £500 ', ' ').replace('09Invoices Over £500 ', ' ').replace('10Invoices Over £500 ', ' ').replace('11Invoices Over £500 ', ' ').replace('12Invoices Over £500 ', ' ').replace('Invoices Over £500 ', ' ').replace('Over £500 Invoices', ' ').replace('Credit Notes', ' ').replace('Invoices over£500-', ' ').replace('Invoices over 500 ', ' ').replace('Invoices over 500 pounds', ' ').replace('Over 500 Credit', ' ').replace('Over 500 Spend ', ' ').replace('£500 spend ', ' ').replace('Over 500 Credit Notes ', ' ').replace('Over 500 Spend -', ' ').replace('Over 500 Credits - ', ' ').replace('Invoices over £500 ', ' ').replace('Invoices over £ 500 - ', ' ').replace('Invoices over £500 - ', ' ').replace('pounds - ', ' ').replace('-', ' ').replace('Invoices over £500 ', ' ').replace('£500 Credit Notes ', ' ').replace('Credit',' ').replace('.csv', ' ').replace('csv', ' ').replace('Over', ' ').replace(u'\xa3500', ' ').replace('500', ' ').replace(' ', '').split(' ')[0].split('(')[0]
+                            csvMth = csvfiles[:3]
+                            if 'sAp' in csvMth:
+                                csvMth = 'Apr'
+                            if 'Not' in csvMth:
+                                csvMth = 'Mar'
+                            if 'sJu' in csvMth:
+                                csvMth = 'Jun'
+                            csvYr = csvfiles[-2:]
+                            if 'il' in csvYr:
+                                csvYr = '15'
+                            if 'ly' in csvYr:
+                                csvYr = '14'
+                            if 'ch' in csvYr:
+                                csvYr = '15'
+                            csvYr = '20' + csvYr
+                            csvMth = convert_mth_strings(csvMth.upper())
+                            data.append([csvYr, csvMth, url])
+
+            elif u'2015-16' not in t or u'2016-17' not in t:
+                    url = 'http://www.redcar-cleveland.gov.uk'+url_csv['href']
+                    if 'redit' not in url:
                         csvfile = url_csv.text.strip()
                         csvfiles = csvfile.replace('10Invoices over 500 pounds -', ' ').replace('11Invoices over £ 500 -', ' ').replace('12Invoices over£500-', ' ').replace('12Invoices over £500', ' ').replace('02Invoices over 500', ' ').replace('03Invoices over 500', ' ').replace('04Invoices over 500', ' ').replace('05Invoices over 500', ' ').replace('06Invoices over 500', ' ').replace('07Invoices over 500', ' ').replace('08Invoices over 500', ' ').replace('09Invoices over 500', ' ').replace('01Invoices Over £500 ', ' ').replace('02Invoices Over £500 ', ' ').replace('03Invoices Over £500 ', ' ').replace('04Invoices Over £500 ', ' ').replace('05Invoices Over £500 ', ' ').replace('06Invoices Over £500 ', ' ').replace('07Invoices Over £500 ', ' ').replace('08Invoices Over £500 ', ' ').replace('09Invoices Over £500 ', ' ').replace('10Invoices Over £500 ', ' ').replace('11Invoices Over £500 ', ' ').replace('12Invoices Over £500 ', ' ').replace('Invoices Over £500 ', ' ').replace('Over £500 Invoices', ' ').replace('Credit Notes', ' ').replace('Invoices over£500-', ' ').replace('Invoices over 500 ', ' ').replace('Invoices over 500 pounds', ' ').replace('Over 500 Credit', ' ').replace('Over 500 Spend ', ' ').replace('£500 spend ', ' ').replace('Over 500 Credit Notes ', ' ').replace('Over 500 Spend -', ' ').replace('Over 500 Credits - ', ' ').replace('Invoices over £500 ', ' ').replace('Invoices over £ 500 - ', ' ').replace('Invoices over £500 - ', ' ').replace('pounds - ', ' ').replace('-', ' ').replace('Invoices over £500 ', ' ').replace('£500 Credit Notes ', ' ').replace('Credit',' ').replace('.csv', ' ').replace('csv', ' ').replace('Over', ' ').replace(u'\xa3500', ' ').replace('500', ' ').replace(' ', '').split(' ')[0].split('(')[0]
                         csvMth = csvfiles[:3]
@@ -135,28 +186,6 @@ for link in links:
                         csvYr = '20' + csvYr
                         csvMth = convert_mth_strings(csvMth.upper())
                         data.append([csvYr, csvMth, url])
-
-            else:
-                    url = 'http://www.redcar-cleveland.gov.uk'+url_csv['href']
-                    csvfile = url_csv.text.strip()
-                    csvfiles = csvfile.replace('10Invoices over 500 pounds -', ' ').replace('11Invoices over £ 500 -', ' ').replace('12Invoices over£500-', ' ').replace('12Invoices over £500', ' ').replace('02Invoices over 500', ' ').replace('03Invoices over 500', ' ').replace('04Invoices over 500', ' ').replace('05Invoices over 500', ' ').replace('06Invoices over 500', ' ').replace('07Invoices over 500', ' ').replace('08Invoices over 500', ' ').replace('09Invoices over 500', ' ').replace('01Invoices Over £500 ', ' ').replace('02Invoices Over £500 ', ' ').replace('03Invoices Over £500 ', ' ').replace('04Invoices Over £500 ', ' ').replace('05Invoices Over £500 ', ' ').replace('06Invoices Over £500 ', ' ').replace('07Invoices Over £500 ', ' ').replace('08Invoices Over £500 ', ' ').replace('09Invoices Over £500 ', ' ').replace('10Invoices Over £500 ', ' ').replace('11Invoices Over £500 ', ' ').replace('12Invoices Over £500 ', ' ').replace('Invoices Over £500 ', ' ').replace('Over £500 Invoices', ' ').replace('Credit Notes', ' ').replace('Invoices over£500-', ' ').replace('Invoices over 500 ', ' ').replace('Invoices over 500 pounds', ' ').replace('Over 500 Credit', ' ').replace('Over 500 Spend ', ' ').replace('£500 spend ', ' ').replace('Over 500 Credit Notes ', ' ').replace('Over 500 Spend -', ' ').replace('Over 500 Credits - ', ' ').replace('Invoices over £500 ', ' ').replace('Invoices over £ 500 - ', ' ').replace('Invoices over £500 - ', ' ').replace('pounds - ', ' ').replace('-', ' ').replace('Invoices over £500 ', ' ').replace('£500 Credit Notes ', ' ').replace('Credit',' ').replace('.csv', ' ').replace('csv', ' ').replace('Over', ' ').replace(u'\xa3500', ' ').replace('500', ' ').replace(' ', '').split(' ')[0].split('(')[0]
-                    csvMth = csvfiles[:3]
-                    if 'sAp' in csvMth:
-                        csvMth = 'Apr'
-                    if 'Not' in csvMth:
-                        csvMth = 'Mar'
-                    if 'sJu' in csvMth:
-                        csvMth = 'Jun'
-                    csvYr = csvfiles[-2:]
-                    if 'il' in csvYr:
-                        csvYr = '15'
-                    if 'ly' in csvYr:
-                        csvYr = '14'
-                    if 'ch' in csvYr:
-                        csvYr = '15'
-                    csvYr = '20' + csvYr
-                    csvMth = convert_mth_strings(csvMth.upper())
-                    data.append([csvYr, csvMth, url])
 
 
 #### STORE DATA 1.0
@@ -180,4 +209,3 @@ if errors > 0:
 
 
 #### EOF
-
